@@ -43,15 +43,15 @@
             this.lblFiltro = new System.Windows.Forms.Label();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
             this.label9 = new System.Windows.Forms.Label();
-            this.textBox9 = new System.Windows.Forms.TextBox();
+            this.txtDsAddEstoque = new System.Windows.Forms.TextBox();
             this.label10 = new System.Windows.Forms.Label();
-            this.textBox10 = new System.Windows.Forms.TextBox();
+            this.txtCdAddEstoque = new System.Windows.Forms.TextBox();
             this.label8 = new System.Windows.Forms.Label();
-            this.textBox8 = new System.Windows.Forms.TextBox();
+            this.txtVlAddEstoque = new System.Windows.Forms.TextBox();
             this.label7 = new System.Windows.Forms.Label();
             this.label6 = new System.Windows.Forms.Label();
-            this.textBox7 = new System.Windows.Forms.TextBox();
-            this.dateTimePicker1 = new System.Windows.Forms.DateTimePicker();
+            this.txtQtAddEstoque = new System.Windows.Forms.TextBox();
+            this.dtpValiAddEstoque = new System.Windows.Forms.DateTimePicker();
             this.groupBox3 = new System.Windows.Forms.GroupBox();
             this.label5 = new System.Windows.Forms.Label();
             this.txtQuantidade = new System.Windows.Forms.TextBox();
@@ -63,6 +63,8 @@
             this.txtDescricao = new System.Windows.Forms.TextBox();
             this.label1 = new System.Windows.Forms.Label();
             this.txtProduto = new System.Windows.Forms.TextBox();
+            this.dtpValiNovoProd = new System.Windows.Forms.DateTimePicker();
+            this.label11 = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.dgvEstoque)).BeginInit();
             this.groupBox1.SuspendLayout();
             this.groupBox2.SuspendLayout();
@@ -73,6 +75,8 @@
             // 
             this.dgvEstoque.AllowUserToAddRows = false;
             this.dgvEstoque.AllowUserToDeleteRows = false;
+            this.dgvEstoque.AllowUserToResizeColumns = false;
+            this.dgvEstoque.AllowUserToResizeRows = false;
             this.dgvEstoque.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
@@ -85,10 +89,13 @@
             this.vl_venda,
             this.quantidade});
             this.dgvEstoque.Location = new System.Drawing.Point(6, 48);
+            this.dgvEstoque.MultiSelect = false;
             this.dgvEstoque.Name = "dgvEstoque";
             this.dgvEstoque.ReadOnly = true;
-            this.dgvEstoque.Size = new System.Drawing.Size(530, 323);
+            this.dgvEstoque.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
+            this.dgvEstoque.Size = new System.Drawing.Size(530, 378);
             this.dgvEstoque.TabIndex = 0;
+            this.dgvEstoque.CellMouseClick += new System.Windows.Forms.DataGridViewCellMouseEventHandler(this.dgvEstoque_CellMouseClick);
             // 
             // codigo
             // 
@@ -136,9 +143,9 @@
             // 
             this.btnAdEstoque.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnAdEstoque.Location = new System.Drawing.Point(428, 397);
+            this.btnAdEstoque.Location = new System.Drawing.Point(103, 155);
             this.btnAdEstoque.Name = "btnAdEstoque";
-            this.btnAdEstoque.Size = new System.Drawing.Size(126, 28);
+            this.btnAdEstoque.Size = new System.Drawing.Size(130, 35);
             this.btnAdEstoque.TabIndex = 1;
             this.btnAdEstoque.Text = "realizar compra";
             this.btnAdEstoque.UseVisualStyleBackColor = true;
@@ -147,7 +154,7 @@
             // btnAdProduto
             // 
             this.btnAdProduto.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnAdProduto.Location = new System.Drawing.Point(274, 397);
+            this.btnAdProduto.Location = new System.Drawing.Point(103, 188);
             this.btnAdProduto.Name = "btnAdProduto";
             this.btnAdProduto.Size = new System.Drawing.Size(130, 30);
             this.btnAdProduto.TabIndex = 2;
@@ -166,7 +173,7 @@
             this.groupBox1.Controls.Add(this.dgvEstoque);
             this.groupBox1.Location = new System.Drawing.Point(12, 12);
             this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(542, 377);
+            this.groupBox1.Size = new System.Drawing.Size(542, 432);
             this.groupBox1.TabIndex = 5;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Estoque";
@@ -174,7 +181,7 @@
             // btnFiltrar
             // 
             this.btnFiltrar.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnFiltrar.Location = new System.Drawing.Point(398, 19);
+            this.btnFiltrar.Location = new System.Drawing.Point(398, 17);
             this.btnFiltrar.Name = "btnFiltrar";
             this.btnFiltrar.Size = new System.Drawing.Size(138, 23);
             this.btnFiltrar.TabIndex = 3;
@@ -202,21 +209,21 @@
             // 
             // groupBox2
             // 
-            this.groupBox2.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Right)));
+            this.groupBox2.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.groupBox2.Controls.Add(this.label9);
-            this.groupBox2.Controls.Add(this.textBox9);
+            this.groupBox2.Controls.Add(this.txtDsAddEstoque);
             this.groupBox2.Controls.Add(this.label10);
-            this.groupBox2.Controls.Add(this.textBox10);
+            this.groupBox2.Controls.Add(this.btnAdEstoque);
+            this.groupBox2.Controls.Add(this.txtCdAddEstoque);
             this.groupBox2.Controls.Add(this.label8);
-            this.groupBox2.Controls.Add(this.textBox8);
+            this.groupBox2.Controls.Add(this.txtVlAddEstoque);
             this.groupBox2.Controls.Add(this.label7);
             this.groupBox2.Controls.Add(this.label6);
-            this.groupBox2.Controls.Add(this.textBox7);
-            this.groupBox2.Controls.Add(this.dateTimePicker1);
-            this.groupBox2.Location = new System.Drawing.Point(560, 206);
+            this.groupBox2.Controls.Add(this.txtQtAddEstoque);
+            this.groupBox2.Controls.Add(this.dtpValiAddEstoque);
+            this.groupBox2.Location = new System.Drawing.Point(560, 245);
             this.groupBox2.Name = "groupBox2";
-            this.groupBox2.Size = new System.Drawing.Size(247, 219);
+            this.groupBox2.Size = new System.Drawing.Size(247, 199);
             this.groupBox2.TabIndex = 6;
             this.groupBox2.TabStop = false;
             this.groupBox2.Text = "Adicionar estoque";
@@ -224,21 +231,21 @@
             // label9
             // 
             this.label9.AutoSize = true;
-            this.label9.Location = new System.Drawing.Point(11, 55);
+            this.label9.Location = new System.Drawing.Point(11, 57);
             this.label9.Name = "label9";
-            this.label9.Size = new System.Drawing.Size(53, 13);
+            this.label9.Size = new System.Drawing.Size(43, 13);
             this.label9.TabIndex = 20;
-            this.label9.Text = "descrição";
+            this.label9.Text = "produto";
             // 
-            // textBox9
+            // txtDsAddEstoque
             // 
-            this.textBox9.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            this.txtDsAddEstoque.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.textBox9.Enabled = false;
-            this.textBox9.Location = new System.Drawing.Point(84, 52);
-            this.textBox9.Name = "textBox9";
-            this.textBox9.Size = new System.Drawing.Size(149, 20);
-            this.textBox9.TabIndex = 19;
+            this.txtDsAddEstoque.Enabled = false;
+            this.txtDsAddEstoque.Location = new System.Drawing.Point(84, 52);
+            this.txtDsAddEstoque.Name = "txtDsAddEstoque";
+            this.txtDsAddEstoque.Size = new System.Drawing.Size(149, 20);
+            this.txtDsAddEstoque.TabIndex = 19;
             // 
             // label10
             // 
@@ -249,38 +256,39 @@
             this.label10.TabIndex = 18;
             this.label10.Text = "codigo";
             // 
-            // textBox10
+            // txtCdAddEstoque
             // 
-            this.textBox10.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            this.txtCdAddEstoque.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.textBox10.Enabled = false;
-            this.textBox10.Location = new System.Drawing.Point(84, 26);
-            this.textBox10.Name = "textBox10";
-            this.textBox10.Size = new System.Drawing.Size(149, 20);
-            this.textBox10.TabIndex = 17;
+            this.txtCdAddEstoque.Enabled = false;
+            this.txtCdAddEstoque.Location = new System.Drawing.Point(84, 26);
+            this.txtCdAddEstoque.Name = "txtCdAddEstoque";
+            this.txtCdAddEstoque.Size = new System.Drawing.Size(149, 20);
+            this.txtCdAddEstoque.TabIndex = 17;
             // 
             // label8
             // 
             this.label8.AutoSize = true;
-            this.label8.Location = new System.Drawing.Point(11, 80);
+            this.label8.Location = new System.Drawing.Point(13, 107);
             this.label8.Name = "label8";
             this.label8.Size = new System.Drawing.Size(68, 13);
             this.label8.TabIndex = 16;
             this.label8.Text = "valor compra";
             // 
-            // textBox8
+            // txtVlAddEstoque
             // 
-            this.textBox8.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            this.txtVlAddEstoque.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.textBox8.Location = new System.Drawing.Point(85, 77);
-            this.textBox8.Name = "textBox8";
-            this.textBox8.Size = new System.Drawing.Size(148, 20);
-            this.textBox8.TabIndex = 15;
+            this.txtVlAddEstoque.Enabled = false;
+            this.txtVlAddEstoque.Location = new System.Drawing.Point(84, 104);
+            this.txtVlAddEstoque.Name = "txtVlAddEstoque";
+            this.txtVlAddEstoque.Size = new System.Drawing.Size(149, 20);
+            this.txtVlAddEstoque.TabIndex = 15;
             // 
             // label7
             // 
             this.label7.AutoSize = true;
-            this.label7.Location = new System.Drawing.Point(10, 132);
+            this.label7.Location = new System.Drawing.Point(11, 81);
             this.label7.Name = "label7";
             this.label7.Size = new System.Drawing.Size(60, 13);
             this.label7.TabIndex = 14;
@@ -289,39 +297,43 @@
             // label6
             // 
             this.label6.AutoSize = true;
-            this.label6.Location = new System.Drawing.Point(11, 109);
+            this.label6.Location = new System.Drawing.Point(13, 135);
             this.label6.Name = "label6";
             this.label6.Size = new System.Drawing.Size(47, 13);
             this.label6.TabIndex = 14;
             this.label6.Text = "validade";
             // 
-            // textBox7
+            // txtQtAddEstoque
             // 
-            this.textBox7.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            this.txtQtAddEstoque.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.textBox7.Location = new System.Drawing.Point(85, 129);
-            this.textBox7.Name = "textBox7";
-            this.textBox7.Size = new System.Drawing.Size(148, 20);
-            this.textBox7.TabIndex = 13;
+            this.txtQtAddEstoque.Location = new System.Drawing.Point(84, 78);
+            this.txtQtAddEstoque.Name = "txtQtAddEstoque";
+            this.txtQtAddEstoque.Size = new System.Drawing.Size(149, 20);
+            this.txtQtAddEstoque.TabIndex = 13;
+            this.txtQtAddEstoque.TextChanged += new System.EventHandler(this.txtQtAddEstoque_TextChanged);
             // 
-            // dateTimePicker1
+            // dtpValiAddEstoque
             // 
-            this.dateTimePicker1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            this.dtpValiAddEstoque.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.dateTimePicker1.CustomFormat = "";
-            this.dateTimePicker1.Format = System.Windows.Forms.DateTimePickerFormat.Short;
-            this.dateTimePicker1.Location = new System.Drawing.Point(85, 103);
-            this.dateTimePicker1.MinDate = new System.DateTime(2016, 1, 1, 0, 0, 0, 0);
-            this.dateTimePicker1.Name = "dateTimePicker1";
-            this.dateTimePicker1.Size = new System.Drawing.Size(148, 20);
-            this.dateTimePicker1.TabIndex = 13;
+            this.dtpValiAddEstoque.CustomFormat = "";
+            this.dtpValiAddEstoque.Format = System.Windows.Forms.DateTimePickerFormat.Short;
+            this.dtpValiAddEstoque.Location = new System.Drawing.Point(84, 129);
+            this.dtpValiAddEstoque.MinDate = new System.DateTime(2016, 1, 1, 0, 0, 0, 0);
+            this.dtpValiAddEstoque.Name = "dtpValiAddEstoque";
+            this.dtpValiAddEstoque.Size = new System.Drawing.Size(149, 20);
+            this.dtpValiAddEstoque.TabIndex = 13;
             // 
             // groupBox3
             // 
             this.groupBox3.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.groupBox3.Controls.Add(this.label11);
+            this.groupBox3.Controls.Add(this.dtpValiNovoProd);
             this.groupBox3.Controls.Add(this.label5);
             this.groupBox3.Controls.Add(this.txtQuantidade);
             this.groupBox3.Controls.Add(this.label3);
+            this.groupBox3.Controls.Add(this.btnAdProduto);
             this.groupBox3.Controls.Add(this.txtPreco);
             this.groupBox3.Controls.Add(this.label4);
             this.groupBox3.Controls.Add(this.txtCusto);
@@ -331,7 +343,7 @@
             this.groupBox3.Controls.Add(this.txtProduto);
             this.groupBox3.Location = new System.Drawing.Point(560, 12);
             this.groupBox3.Name = "groupBox3";
-            this.groupBox3.Size = new System.Drawing.Size(247, 188);
+            this.groupBox3.Size = new System.Drawing.Size(247, 227);
             this.groupBox3.TabIndex = 7;
             this.groupBox3.TabStop = false;
             this.groupBox3.Text = "novo produto";
@@ -426,16 +438,31 @@
             this.txtProduto.Size = new System.Drawing.Size(157, 20);
             this.txtProduto.TabIndex = 3;
             // 
+            // dtpValiNovoProd
+            // 
+            this.dtpValiNovoProd.Format = System.Windows.Forms.DateTimePickerFormat.Short;
+            this.dtpValiNovoProd.Location = new System.Drawing.Point(76, 149);
+            this.dtpValiNovoProd.Name = "dtpValiNovoProd";
+            this.dtpValiNovoProd.Size = new System.Drawing.Size(157, 20);
+            this.dtpValiNovoProd.TabIndex = 13;
+            // 
+            // label11
+            // 
+            this.label11.AutoSize = true;
+            this.label11.Location = new System.Drawing.Point(11, 155);
+            this.label11.Name = "label11";
+            this.label11.Size = new System.Drawing.Size(47, 13);
+            this.label11.TabIndex = 14;
+            this.label11.Text = "validade";
+            // 
             // frmEstoque
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(819, 437);
+            this.ClientSize = new System.Drawing.Size(819, 447);
             this.Controls.Add(this.groupBox3);
             this.Controls.Add(this.groupBox2);
             this.Controls.Add(this.groupBox1);
-            this.Controls.Add(this.btnAdProduto);
-            this.Controls.Add(this.btnAdEstoque);
             this.Name = "frmEstoque";
             this.Text = "estoque";
             this.Load += new System.EventHandler(this.estoque_Load);
@@ -472,7 +499,7 @@
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.TextBox txtProduto;
         private System.Windows.Forms.Label label6;
-        private System.Windows.Forms.DateTimePicker dateTimePicker1;
+        private System.Windows.Forms.DateTimePicker dtpValiAddEstoque;
         private System.Windows.Forms.DataGridViewTextBoxColumn codigo;
         private System.Windows.Forms.DataGridViewTextBoxColumn produto;
         private System.Windows.Forms.DataGridViewTextBoxColumn validade;
@@ -480,12 +507,14 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn vl_venda;
         private System.Windows.Forms.DataGridViewTextBoxColumn quantidade;
         private System.Windows.Forms.Label label9;
-        private System.Windows.Forms.TextBox textBox9;
+        private System.Windows.Forms.TextBox txtDsAddEstoque;
         private System.Windows.Forms.Label label10;
-        private System.Windows.Forms.TextBox textBox10;
+        private System.Windows.Forms.TextBox txtCdAddEstoque;
         private System.Windows.Forms.Label label8;
-        private System.Windows.Forms.TextBox textBox8;
+        private System.Windows.Forms.TextBox txtVlAddEstoque;
         private System.Windows.Forms.Label label7;
-        private System.Windows.Forms.TextBox textBox7;
+        private System.Windows.Forms.TextBox txtQtAddEstoque;
+        private System.Windows.Forms.Label label11;
+        private System.Windows.Forms.DateTimePicker dtpValiNovoProd;
     }
 }

@@ -32,16 +32,29 @@ namespace prj_loja
         #region carregar estoque
         private void estoque_Load(object sender, EventArgs e)
         {
+            atualizarEstoque();
+        }
+        private void atualizarEstoque()
+        {
+            codigos = new List<string>();
+            descricao = new List<string>();
+            qtEstoque = new List<int>();
+            qtSobrando = new List<int>();
+            vlCompra = new List<string>();
+            vlVenda = new List<string>();
+
             #region conectar
             MySqlConnection conexao = new MySqlConnection(local);
             MySqlCommand executar;
             MySqlDataReader dados;
             string comando = "";
 
-            try{
+            try
+            {
                 conexao.Open();
             }
-            catch{
+            catch
+            {
                 MessageBox.Show("erro de conexao");
                 conexao.Close();
                 return;
@@ -53,8 +66,10 @@ namespace prj_loja
             executar = new MySqlCommand(comando, conexao);
             dados = executar.ExecuteReader();
 
-            if(dados.HasRows) {
-                while (dados.Read()) {
+            if (dados.HasRows)
+            {
+                while (dados.Read())
+                {
                     codigos.Add(dados[0].ToString());
                     descricao.Add(dados[1].ToString());
                     qtEstoque.Add(int.Parse(dados[2].ToString()));
@@ -76,12 +91,13 @@ namespace prj_loja
                 int i = 0;
                 while (dados.Read())
                 {
-                    for(i=0;i < codigos.Count; i++)
+                    for (i = 0; i < codigos.Count; i++)
                     {
-                        if(dados[0].ToString() == codigos[i])
+                        if (dados[0].ToString() == codigos[i])
                         { break; }
                     }
-                    if (qtSobrando[i] >0) {
+                    if (qtSobrando[i] > 0)
+                    {
                         int linha = dgvEstoque.Rows.Add();
                         dgvEstoque.Rows[linha].Cells[0].Value = dados[0].ToString();
                         dgvEstoque.Rows[linha].Cells[1].Value = descricao[i];
@@ -89,11 +105,13 @@ namespace prj_loja
                         dgvEstoque.Rows[linha].Cells[3].Value = vlCompra[i];
                         dgvEstoque.Rows[linha].Cells[4].Value = vlVenda[i];
 
-                        if (qtSobrando[i] >= int.Parse(dados[1].ToString())) {
+                        if (qtSobrando[i] >= int.Parse(dados[1].ToString()))
+                        {
                             dgvEstoque.Rows[linha].Cells[5].Value = dados[1].ToString();
                             qtSobrando[i] -= int.Parse(dados[1].ToString());
                         }
-                        else {
+                        else
+                        {
                             dgvEstoque.Rows[linha].Cells[5].Value = qtSobrando[i];
                             qtSobrando[i] = 0;
                         }
@@ -105,9 +123,10 @@ namespace prj_loja
             #endregion
 
             #region exibir esgotados
-            for(int i =0;i<codigos.Count;i++)
+            for (int i = 0; i < codigos.Count; i++)
             {
-                if (qtEstoque[i] == 0){
+                if (qtEstoque[i] == 0)
+                {
                     int linha = dgvEstoque.Rows.Add();
                     dgvEstoque.Rows[linha].Cells[0].Value = codigos[i];
                     dgvEstoque.Rows[linha].Cells[1].Value = descricao[i];
@@ -132,15 +151,96 @@ namespace prj_loja
         #region novo produto
         private void btnAdProduto_Click(object sender, EventArgs e)
         {
-            frmNovoProduto telaCriarProduto = new frmNovoProduto(this);
-            telaCriarProduto.Show();
+            #region variaveis
+            string local = "SERVER=localhost;UID=root;PASSWORD=;DATABASE=lojabanco;";
+            string codigo = txtProduto.Text;
+            string descricao = txtDescricao.Text;
+            string custo = "";
+            string preco = txtPreco.Text;
+            string quantidade = txtQuantidade.Text;
+            string validade = dtpValiNovoProd.Value.ToString("yyyy-MM-dd");
+            #endregion
+
+            #region checar custo
+            string[] vl = new string[2];
+            int n = 0;
+            for (int i = 0; i < txtCusto.Text.Length; i++)
+            {
+                if (txtCusto.Text.Substring(i, 1) != "/")
+                {
+                    vl[n] += txtCusto.Text.Substring(i, 1);
+                }
+                else n = 1;
+            }
+
+            if (n == 0) custo = vl[0];
+            else custo = (float.Parse(vl[0]) / float.Parse(vl[1])).ToString();
+            #endregion
+
+            #region conectar
+            MySqlConnection conexao = new MySqlConnection(local);
+
+            try
+            {
+                conexao.Open();
+            }
+            catch
+            {
+                MessageBox.Show("erro de conexao");
+                conexao.Close();
+                return;
+            }
+            #endregion
+
+            #region registrar novo produto
+            string cmdNovo = "insert into produto(cd_produto,ds_produto,vl_compra,vl_venda,qt_total_unidades)";
+            cmdNovo += " values(" + codigo + ",'" + descricao + "'," + custo + "," + preco + ",0)";
+
+            MySqlCommand executar = new MySqlCommand(cmdNovo, conexao);
+            try
+            {
+                executar.ExecuteNonQuery();
+            }
+            catch
+            {
+                MessageBox.Show("falha em registrar novo produto");
+                conexao.Close();
+                return;
+            }
+
+            MessageBox.Show("produto cadastrado com sucesso");
+            conexao.Close();
+            #endregion
+            string valorCompra = (float.Parse(custo) * float.Parse(quantidade)).ToString();
+            valorCompra = valorCompra.Replace(",",".");
+            addEstoque(codigo,quantidade,validade,valorCompra);
         }
         #endregion
 
         #region adicionar ao estoque
         private void btnAdEstoque_Click(object sender, EventArgs e){
-            
-            /*
+            #region variaveis
+            string codigoProduto = txtCdAddEstoque.Text;
+            string quantidade = txtQtAddEstoque.Text;
+            string validade = dtpValiAddEstoque.Value.ToString("yyyy-MM-dd");
+            string valorCompra = txtVlAddEstoque.Text.Replace(",",".");
+            #endregion
+
+            addEstoque(codigoProduto,quantidade,validade,valorCompra);
+        }
+
+        private void addEstoque(string cdProduto,string qtProduto,string validade,string vlCusto) {
+            string codigoCompra = "";
+            string data = DateTime.Today.ToString("yyyy-MM-dd");
+            string hora = DateTime.Now.ToString("hh:mm:ss");
+            MySqlDataReader dados;
+
+            #region comandos
+            string cmdPegaCodigo = "select Max(cd_compra)+1 from itemCompra";
+            string cmdAddEstoque = "insert into itemCompra(cd_compra,cd_produto,dt_compra,hr_compra,qt_unidades,dt_validade,vl_compra)";
+            string cmdAtuEstoque = "update produto set qt_total_unidades=qt_total_unidades+" + qtProduto + " where cd_produto ="+cdProduto;
+            #endregion
+
             #region conectar
             MySqlConnection conexao = new MySqlConnection(local);
 
@@ -157,25 +257,96 @@ namespace prj_loja
             #endregion
 
             #region registrar no estoque
-            string comando = "insert into itemCompra(cd_produto,cd_compra,qt_unidades,dt_validade,vl_compra)";
-            //comando += " values(" + codigo + ",'" + descricao + "'," + custo + "," + preco + "," + quantidade + ")";
+            MySqlCommand executar = new MySqlCommand(cmdPegaCodigo, conexao);
+            try
+            {
+                dados = executar.ExecuteReader();
+            }
+            catch
+            {
+                MessageBox.Show("falha em pegar novo codigo");
+                conexao.Close();
+                return;
+            }
+            if (dados.HasRows)
+            {
+                while (dados.Read())
+                {
+                    codigoCompra = dados[0].ToString();
+                }
+            }
+            dados.Close();
 
-            MySqlCommand executar = new MySqlCommand(comando, conexao);
+            cmdAddEstoque += " values(" + codigoCompra + "," + cdProduto + ",'" + data + "','" + hora + "'," + qtProduto + ",'";
+            cmdAddEstoque += validade + "'," + vlCusto + ")";
+
+            executar = new MySqlCommand(cmdAddEstoque, conexao);
             try
             {
                 executar.ExecuteNonQuery();
             }
             catch
             {
-                MessageBox.Show("falha em registrar novo produto");
+                MessageBox.Show("falha em registrar compra estoque");
+                MessageBox.Show(cmdAddEstoque);
+                conexao.Close();
+                return;
+            }
+
+            executar = new MySqlCommand(cmdAtuEstoque, conexao);
+            try
+            {
+                executar.ExecuteNonQuery();
+            }
+            catch
+            {
+                MessageBox.Show("falha em atualizar estoque");
                 conexao.Close();
                 return;
             }
 
             conexao.Close();
             MessageBox.Show("produto cadastrado com sucesso");
-            #endregion*/
+            #endregion
+
+            atualizarEstoque();
         }
         #endregion
+
+        #region selecionar linha
+        private void dgvEstoque_CellMouseClick(object sender, DataGridViewCellMouseEventArgs e)
+        {
+            txtCdAddEstoque.Text = dgvEstoque.Rows[dgvEstoque.CurrentRow.Index].Cells[0].Value.ToString();
+            txtDsAddEstoque.Text = dgvEstoque.Rows[dgvEstoque.CurrentRow.Index].Cells[1].Value.ToString();
+            exibirVlCompra();
+        }
+        #endregion
+
+        #region digitar quantidade a colocar no estoque
+        private void txtQtAddEstoque_TextChanged(object sender, EventArgs e)
+        {
+            exibirVlCompra();
+        }
+        private void exibirVlCompra()
+        {
+            int qtAdd = 0;
+            if (txtQtAddEstoque.Text != "" && dgvEstoque.CurrentRow.Index>-1) {
+                try {
+                    qtAdd = int.Parse(txtQtAddEstoque.Text);
+                }
+                catch {
+                    txtQtAddEstoque.Text = "";
+                    txtVlAddEstoque.Text = "";
+                    return;
+                }
+                float valor = float.Parse(dgvEstoque.Rows[dgvEstoque.CurrentRow.Index].Cells[3].Value.ToString());
+                txtVlAddEstoque.Text = (qtAdd * valor).ToString();
+            }
+            else {
+                txtVlAddEstoque.Text = "";
+            }
+        }
+        #endregion
+    
     }
 }
