@@ -66,7 +66,7 @@ namespace prj_loja
             string login = txtLogin.Text;
             string senha = txtSenha.Text;
 
-            string local = "SERVER=localhost;UID=root;PASSWORD=;DATABASE=lojabanco;";
+            
             MySqlConnection conexao;
             #endregion
 
@@ -84,7 +84,7 @@ namespace prj_loja
             #endregion
 
             #region checa no banco
-            conexao = new MySqlConnection(local);
+            conexao = new MySqlConnection(global.Local);
             try
             {
                 conexao.Open();
@@ -95,7 +95,7 @@ namespace prj_loja
                 conexao.Close();
                 return;
             }
-            MySqlCommand executar = new MySqlCommand("select cd_login from usuario where nm_login = '" + login + "' and nm_senha=md5('" + senha + "')", conexao);
+            MySqlCommand executar = new MySqlCommand("select cd_login from usuario where nm_login = '" + login + "' and nm_senha= md5('" + senha + "')", conexao);
             MySqlDataReader dado = executar.ExecuteReader();
             if (dado.HasRows)
             {

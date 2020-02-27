@@ -7,9 +7,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using prj_loja.Properties;
 using MySql.Data.MySqlClient;
 using MySql.Data;
-using prj_loja.Properties;
+
 
 namespace prj_loja
 {
@@ -21,19 +22,9 @@ namespace prj_loja
         }
 
         #region variaveis
-        string local = "SERVER=localhost;UID=root;PASSWORD=;DATABASE=lojabanco;";
         List<clsProduto> produtos = new List<clsProduto>();
         List<clsFormaPagar> formasPagar = new List<clsFormaPagar>();
-
-        //List<string> codigos = new List<string>();
-        //List<string> descricoes = new List<string>();
-        //List<string> valores = new List<string>();
-
-        //List<string> cd_pagamento = new List<string>();
-        //List<string> nm_pagamento = new List<string>();
-
-        //List<string> cd_fiador = new List<string>();
-        //List<string> nm_fiador = new List<string>();
+        
 
         double totalPagar = 0;
         double pago = 0;
@@ -43,7 +34,7 @@ namespace prj_loja
         private void venda_Load(object sender, EventArgs e)
         {
             #region conectar
-            MySqlConnection conexao = new MySqlConnection(local);
+            MySqlConnection conexao = new MySqlConnection(global.Local);
             MySqlCommand requerimento = new MySqlCommand();
             MySqlDataReader dados;
 
@@ -60,23 +51,20 @@ namespace prj_loja
             #endregion
 
             #region carrregar produtos
-            requerimento = new MySqlCommand("select cd_produto,ds_produto,vl_venda from produto", conexao);
+            requerimento = new MySqlCommand("SELECT cd_produto,ds_produto,vl_venda FROM produto", conexao);
             dados = requerimento.ExecuteReader();
 
             if (dados.HasRows){
                 while (dados.Read()){
                     clsProduto pr = new clsProduto(dados[0].ToString(),dados[1].ToString(),dados[2].ToString());
                     produtos.Add(pr);
-                    //codigos.Add(dados[0].ToString());
-                    //descricoes.Add(dados[1].ToString());
-                    //valores.Add(dados[2].ToString());
                 }
             }
             dados.Close();
             #endregion
 
             #region carregar tipos pagamentos
-            requerimento = new MySqlCommand("select cd_tipoPagamento,nm_tipoPagamento from tipoPagamento", conexao);
+            requerimento = new MySqlCommand("SELECT cd_tipoPagamento,nm_tipoPagamento FROM tipoPagamento", conexao);
             dados = requerimento.ExecuteReader();
 
             if (dados.HasRows)
@@ -85,8 +73,6 @@ namespace prj_loja
                 {
                     clsFormaPagar fp = new clsFormaPagar(dados[0].ToString(), dados[1].ToString());
                     formasPagar.Add(fp);
-                    //cd_pagamento.Add(dados[0].ToString());
-                    //nm_pagamento.Add(dados[1].ToString());
                     cbxTipoPago.Items.Add(dados[1].ToString());
                 }
             }
@@ -195,7 +181,7 @@ namespace prj_loja
         private void fecharConta()
         {
             #region conectar
-            MySqlConnection conexao = new MySqlConnection(local);
+            MySqlConnection conexao = new MySqlConnection(global.Local);
             MySqlCommand registro;
             MySqlDataReader dados;
             string comando = "";
@@ -213,7 +199,7 @@ namespace prj_loja
 
             #region pegar codigo venda
             string cd_venda = "";
-            comando = "select max(cd_venda)+1 from venda";
+            comando = "SELECT max(cd_venda)+1 FROM venda";
             registro = new MySqlCommand(comando, conexao);
             dados = registro.ExecuteReader();
 
@@ -221,29 +207,39 @@ namespace prj_loja
             {
                 while (dados.Read())
                 {
-                    cd_venda = dados[0].ToString();
+                    if (dados[0].ToString() != "")
+                    {
+                        cd_venda = dados[0].ToString();
+                    }
+                    else
+                    {
+                        cd_venda = "0";
+                    }
                 }
+            }
+            else
+            {
+                cd_venda = "0";
             }
             dados.Close();
             #endregion
 
             #region pegar data
             DateTime data = DateTime.Now;
-            string dia = data.Year + "-" + data.Month +"-"+data.Day;
+            string dia = data.Date.ToString("yyyy-MM-dd");
             string hora = data.ToLongTimeString();
             #endregion
 
             #region pegar tipo pagamento
             int selePagar = cbxTipoPago.SelectedIndex;
             string pagamento = formasPagar[selePagar].Codigo;
-            //string pagamento = cd_pagamento[selePagar];
             #endregion
             
-            #region registrar venda  /nao esta registrando o funcionario que realizou a venda/
-            comando = "insert into venda(cd_venda,dt_venda,hr_venda,cd_tipoPagamento,cd_login,vl_pagamento) values("+cd_venda+",'"+dia+"','"+hora+"',"+pagamento+","+global.cod_login+","+ totalPagar + ")";
+            #region registrar venda
+            comando = "INSERT INTO venda(cd_venda,dt_venda,hr_venda,cd_tipoPagamento,cd_login,vl_pagamento) VALUES ("+cd_venda+",N'"+dia+"',N'"+hora+"',"+pagamento+","+global.cod_login+","+ totalPagar.ToString().Replace(",",".") + ")";
             
             registro = new MySqlCommand(comando, conexao);
-
+            
             try
             {
                 registro.ExecuteNonQuery();
@@ -257,7 +253,7 @@ namespace prj_loja
             #endregion
 
             #region registrar produtos vendidos
-            comando = "insert into itemVenda(cd_produto,cd_venda,qt_unidades) values ";
+            comando = "INSERT INTO itemVenda(cd_produto,cd_venda,qt_unidades) VALUES ";
             
             for(int i = 0; i < dgvItens.Rows.Count; i++)
             {
@@ -277,6 +273,7 @@ namespace prj_loja
             }
             catch
             {
+                MessageBox.Show(comando);
                 MessageBox.Show("erro registrar produtos vendidos!");
                 conexao.Close();
                 return;
@@ -347,6 +344,7 @@ namespace prj_loja
         }
         #endregion
 
+        #region navegacao
         #region mudar tela
         private void btnPagar_Click(object sender, EventArgs e)
         {
@@ -406,5 +404,6 @@ namespace prj_loja
                 fecharConta();
             }
         }
+        #endregion
     }
 }

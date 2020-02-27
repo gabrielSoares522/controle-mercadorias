@@ -29,6 +29,7 @@
         private void InitializeComponent()
         {
             this.gpbAdDivida = new System.Windows.Forms.GroupBox();
+            this.lblCodigo = new System.Windows.Forms.Label();
             this.lblMotivo = new System.Windows.Forms.Label();
             this.dgvMotivo = new System.Windows.Forms.DataGridView();
             this.codigo = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -40,7 +41,6 @@
             this.txtMotivo = new System.Windows.Forms.TextBox();
             this.lblMotivo2 = new System.Windows.Forms.Label();
             this.btnAdMotivo = new System.Windows.Forms.Button();
-            this.lblCodigo = new System.Windows.Forms.Label();
             this.gpbAdDivida.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgvMotivo)).BeginInit();
             this.gpbAdMotivo.SuspendLayout();
@@ -60,6 +60,15 @@
             this.gpbAdDivida.TabIndex = 8;
             this.gpbAdDivida.TabStop = false;
             this.gpbAdDivida.Text = "Realizar retirada";
+            // 
+            // lblCodigo
+            // 
+            this.lblCodigo.AutoSize = true;
+            this.lblCodigo.Location = new System.Drawing.Point(6, 178);
+            this.lblCodigo.Name = "lblCodigo";
+            this.lblCodigo.Size = new System.Drawing.Size(43, 13);
+            this.lblCodigo.TabIndex = 7;
+            this.lblCodigo.Text = "Código:";
             // 
             // lblMotivo
             // 
@@ -85,6 +94,7 @@
             this.dgvMotivo.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
             this.dgvMotivo.Size = new System.Drawing.Size(367, 150);
             this.dgvMotivo.TabIndex = 3;
+            this.dgvMotivo.CellMouseClick += new System.Windows.Forms.DataGridViewCellMouseEventHandler(this.dgvMotivo_CellMouseClick);
             // 
             // codigo
             // 
@@ -163,23 +173,14 @@
             this.btnAdMotivo.UseVisualStyleBackColor = true;
             this.btnAdMotivo.Click += new System.EventHandler(this.btnAdMotivo_Click);
             // 
-            // lblCodigo
-            // 
-            this.lblCodigo.AutoSize = true;
-            this.lblCodigo.Location = new System.Drawing.Point(6, 178);
-            this.lblCodigo.Name = "lblCodigo";
-            this.lblCodigo.Size = new System.Drawing.Size(43, 13);
-            this.lblCodigo.TabIndex = 7;
-            this.lblCodigo.Text = "Código:";
-            // 
-            // retirada
+            // frmRetirada
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(410, 351);
             this.Controls.Add(this.gpbAdDivida);
             this.Controls.Add(this.gpbAdMotivo);
-            this.Name = "retirada";
+            this.Name = "frmRetirada";
             this.Text = "retirada";
             this.Load += new System.EventHandler(this.retirada_Load);
             this.gpbAdDivida.ResumeLayout(false);

@@ -7,22 +7,14 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using System.Configuration;
 
 namespace prj_loja
 {
     public partial class frmPrincipal : Form
     {
-        public frmPrincipal()
-        {
-
+        public frmPrincipal() {
             InitializeComponent();
-        }
-
-        private void fechamentoToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            frmFechamento frm_fechamento = new frmFechamento();
-            frm_fechamento.MdiParent = this;
-            frm_fechamento.Show();
         }
 
         private void retiradaToolStripMenuItem_Click(object sender, EventArgs e)
@@ -63,11 +55,24 @@ namespace prj_loja
     }
     static class global {
         private static string cd_login;
+        private static string local;
 
         public static string cod_login
         {
             get { return cd_login;  }
             set { cd_login = value; }
+        }
+
+        public static string Local {
+            get {
+                string server =System.Configuration.ConfigurationManager.AppSettings["server"];
+                string uid = System.Configuration.ConfigurationManager.AppSettings["uid"];
+                string password = System.Configuration.ConfigurationManager.AppSettings["password"];
+                string database = System.Configuration.ConfigurationManager.AppSettings["database"];
+                local = "SERVER = "+server+"; UID = "+uid+"; PASSWORD ="+password+"; DATABASE = "+database+";";
+                return local;
+            }
+
         }
     }
 }

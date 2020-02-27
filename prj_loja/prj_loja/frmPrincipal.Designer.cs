@@ -29,7 +29,6 @@
         private void InitializeComponent()
         {
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
-            this.fechamentoToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.retiradaToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.estatisticaToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.estoqueToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -40,23 +39,15 @@
             // menuStrip1
             // 
             this.menuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.fechamentoToolStripMenuItem,
-            this.retiradaToolStripMenuItem,
-            this.estatisticaToolStripMenuItem,
+            this.vendaToolStripMenuItem,
             this.estoqueToolStripMenuItem,
-            this.vendaToolStripMenuItem});
+            this.retiradaToolStripMenuItem,
+            this.estatisticaToolStripMenuItem});
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
             this.menuStrip1.Name = "menuStrip1";
             this.menuStrip1.Size = new System.Drawing.Size(845, 24);
             this.menuStrip1.TabIndex = 0;
             this.menuStrip1.Text = "menuStrip1";
-            // 
-            // fechamentoToolStripMenuItem
-            // 
-            this.fechamentoToolStripMenuItem.Name = "fechamentoToolStripMenuItem";
-            this.fechamentoToolStripMenuItem.Size = new System.Drawing.Size(76, 20);
-            this.fechamentoToolStripMenuItem.Text = "fechamento";
-            this.fechamentoToolStripMenuItem.Click += new System.EventHandler(this.fechamentoToolStripMenuItem_Click);
             // 
             // retiradaToolStripMenuItem
             // 
@@ -109,7 +100,6 @@
         #endregion
 
         private System.Windows.Forms.MenuStrip menuStrip1;
-        private System.Windows.Forms.ToolStripMenuItem fechamentoToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem retiradaToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem estatisticaToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem estoqueToolStripMenuItem;

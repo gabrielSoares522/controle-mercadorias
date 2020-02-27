@@ -1,7 +1,5 @@
-insert into usuario(cd_login,nm_login,nm_senha) values(1000,'jose',md5('123'));
-
 insert into motivoRetirada(cd_motivoRetirada,nm_motivoRetirada) values
-(0,'mensalidade escola dani'),
+(0,'conta luz'),
 (1,'pagar fornecedor'),
 (2,'compras casa'),
 (3,'fatura cartao credito');
@@ -20,11 +18,6 @@ insert into itemCompra(cd_compra,cd_produto,dt_compra,hr_compra,qt_unidades,dt_v
 (0,0,'2019-09-12','15:00:00',12,'2019-12-21',10.00),
 (1,1,'2019-09-12','15:00:00',18,'2019-12-21',20.00),
 (2,2,'2019-09-12','15:00:00',36,'2019-12-21',30.00);
-
-insert into tipoPagamento(cd_tipoPagamento,nm_tipoPagamento) values
-(0,"dinheiro"),
-(1,"debito"),
-(2,"credito");
 
 insert into venda(cd_venda,dt_venda,hr_venda,cd_tipoPagamento,cd_login,vl_pagamento) values
 (0,'2019-09-14','18:30:00',1,1000,2.00),

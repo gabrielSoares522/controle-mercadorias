@@ -1,4 +1,4 @@
-drop database lojaBanco;
+drop database if exists lojaBanco;
 create database lojaBanco;
 use lojaBanco;
 
@@ -8,11 +8,13 @@ create table usuario(
     nm_senha varchar(50),
     constraint pk_usuario primary key(cd_login)
 );
+
 create table motivoRetirada(
 	cd_motivoRetirada int,
     nm_motivoRetirada varchar(100),
     constraint pk_motivoRetirada primary key(cd_motivoRetirada)
 );
+
 create table retirada(
 	dt_retirada date,
     hr_retirada time,
@@ -23,6 +25,7 @@ create table retirada(
     constraint fk_retirada_motivoRetirada foreign key (cd_motivoRetirada) references motivoRetirada(cd_motivoRetirada),
     constraint fk_reirada_usuario foreign key (cd_login) references usuario(cd_login)
 );
+
 create table produto(
 	cd_produto int,
     ds_produto varchar(150),
@@ -31,6 +34,7 @@ create table produto(
     qt_total_unidades int,
     constraint pk_produto primary key (cd_produto)
 );
+
 create table itemCompra(
     cd_compra int,
 	cd_produto int,
@@ -42,11 +46,13 @@ create table itemCompra(
     constraint pk_itemCompra primary key (cd_compra),
     constraint fk_itemCompra_produto foreign key (cd_produto) references produto(cd_produto)
 );
+
 create table tipoPagamento(
 	cd_tipoPagamento int,
     nm_tipoPagamento varchar(50),
     constraint pk_tipoPagamento primary key (cd_tipoPagamento)
 );
+
 create table venda(
 	cd_venda int,
 	dt_venda date,
@@ -58,6 +64,7 @@ create table venda(
     constraint fk_venda_tipoPagamento foreign key (cd_tipoPagamento) references tipoPagamento(cd_tipoPagamento),
     constraint fk_venda_usuario foreign key (cd_login) references usuario(cd_login)
 );
+
 create table itemVenda(
 	cd_produto int,
     cd_venda int,
@@ -66,3 +73,7 @@ create table itemVenda(
     constraint fk_itemVenda_venda foreign key (cd_venda) references venda(cd_venda),
     constraint fk_itemVenda_produto foreign key (cd_produto) references produto(cd_produto)
 );
+
+insert into usuario(cd_login,nm_login,nm_senha) values(1000,'adm',md5('123'));
+
+insert into tipoPagamento(cd_tipoPagamento,nm_tipoPagamento) values(0,"dinheiro"),(1,"debito"),(2,"credito");

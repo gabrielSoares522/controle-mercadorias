@@ -53,6 +53,8 @@
             this.txtQtAddEstoque = new System.Windows.Forms.TextBox();
             this.dtpValiAddEstoque = new System.Windows.Forms.DateTimePicker();
             this.groupBox3 = new System.Windows.Forms.GroupBox();
+            this.label11 = new System.Windows.Forms.Label();
+            this.dtpValiNovoProd = new System.Windows.Forms.DateTimePicker();
             this.label5 = new System.Windows.Forms.Label();
             this.txtQuantidade = new System.Windows.Forms.TextBox();
             this.label3 = new System.Windows.Forms.Label();
@@ -63,8 +65,6 @@
             this.txtDescricao = new System.Windows.Forms.TextBox();
             this.label1 = new System.Windows.Forms.Label();
             this.txtProduto = new System.Windows.Forms.TextBox();
-            this.dtpValiNovoProd = new System.Windows.Forms.DateTimePicker();
-            this.label11 = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.dgvEstoque)).BeginInit();
             this.groupBox1.SuspendLayout();
             this.groupBox2.SuspendLayout();
@@ -93,7 +93,7 @@
             this.dgvEstoque.Name = "dgvEstoque";
             this.dgvEstoque.ReadOnly = true;
             this.dgvEstoque.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.dgvEstoque.Size = new System.Drawing.Size(530, 378);
+            this.dgvEstoque.Size = new System.Drawing.Size(530, 369);
             this.dgvEstoque.TabIndex = 0;
             this.dgvEstoque.CellMouseClick += new System.Windows.Forms.DataGridViewCellMouseEventHandler(this.dgvEstoque_CellMouseClick);
             // 
@@ -154,7 +154,7 @@
             // btnAdProduto
             // 
             this.btnAdProduto.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnAdProduto.Location = new System.Drawing.Point(103, 188);
+            this.btnAdProduto.Location = new System.Drawing.Point(103, 175);
             this.btnAdProduto.Name = "btnAdProduto";
             this.btnAdProduto.Size = new System.Drawing.Size(130, 30);
             this.btnAdProduto.TabIndex = 2;
@@ -173,7 +173,7 @@
             this.groupBox1.Controls.Add(this.dgvEstoque);
             this.groupBox1.Location = new System.Drawing.Point(12, 12);
             this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(542, 432);
+            this.groupBox1.Size = new System.Drawing.Size(542, 423);
             this.groupBox1.TabIndex = 5;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Estoque";
@@ -221,7 +221,7 @@
             this.groupBox2.Controls.Add(this.label6);
             this.groupBox2.Controls.Add(this.txtQtAddEstoque);
             this.groupBox2.Controls.Add(this.dtpValiAddEstoque);
-            this.groupBox2.Location = new System.Drawing.Point(560, 245);
+            this.groupBox2.Location = new System.Drawing.Point(560, 235);
             this.groupBox2.Name = "groupBox2";
             this.groupBox2.Size = new System.Drawing.Size(247, 199);
             this.groupBox2.TabIndex = 6;
@@ -343,10 +343,27 @@
             this.groupBox3.Controls.Add(this.txtProduto);
             this.groupBox3.Location = new System.Drawing.Point(560, 12);
             this.groupBox3.Name = "groupBox3";
-            this.groupBox3.Size = new System.Drawing.Size(247, 227);
+            this.groupBox3.Size = new System.Drawing.Size(247, 217);
             this.groupBox3.TabIndex = 7;
             this.groupBox3.TabStop = false;
             this.groupBox3.Text = "novo produto";
+            // 
+            // label11
+            // 
+            this.label11.AutoSize = true;
+            this.label11.Location = new System.Drawing.Point(11, 155);
+            this.label11.Name = "label11";
+            this.label11.Size = new System.Drawing.Size(47, 13);
+            this.label11.TabIndex = 14;
+            this.label11.Text = "validade";
+            // 
+            // dtpValiNovoProd
+            // 
+            this.dtpValiNovoProd.Format = System.Windows.Forms.DateTimePickerFormat.Short;
+            this.dtpValiNovoProd.Location = new System.Drawing.Point(76, 149);
+            this.dtpValiNovoProd.Name = "dtpValiNovoProd";
+            this.dtpValiNovoProd.Size = new System.Drawing.Size(157, 20);
+            this.dtpValiNovoProd.TabIndex = 13;
             // 
             // label5
             // 
@@ -437,23 +454,6 @@
             this.txtProduto.Name = "txtProduto";
             this.txtProduto.Size = new System.Drawing.Size(157, 20);
             this.txtProduto.TabIndex = 3;
-            // 
-            // dtpValiNovoProd
-            // 
-            this.dtpValiNovoProd.Format = System.Windows.Forms.DateTimePickerFormat.Short;
-            this.dtpValiNovoProd.Location = new System.Drawing.Point(76, 149);
-            this.dtpValiNovoProd.Name = "dtpValiNovoProd";
-            this.dtpValiNovoProd.Size = new System.Drawing.Size(157, 20);
-            this.dtpValiNovoProd.TabIndex = 13;
-            // 
-            // label11
-            // 
-            this.label11.AutoSize = true;
-            this.label11.Location = new System.Drawing.Point(11, 155);
-            this.label11.Name = "label11";
-            this.label11.Size = new System.Drawing.Size(47, 13);
-            this.label11.TabIndex = 14;
-            this.label11.Text = "validade";
             // 
             // frmEstoque
             // 

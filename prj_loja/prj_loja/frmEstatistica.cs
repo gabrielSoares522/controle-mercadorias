@@ -18,13 +18,12 @@ namespace prj_loja
         {
             InitializeComponent();
         }
-
-        string local = "SERVER=localhost;UID=root;PASSWORD=;DATABASE=lojabanco;";
+        
     
         private void btnGerar_Click(object sender, EventArgs e)
         {
             #region conectar
-            MySqlConnection conexao = new MySqlConnection(local);
+            MySqlConnection conexao = new MySqlConnection(global.Local);
 
             try
             {

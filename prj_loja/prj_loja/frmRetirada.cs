@@ -18,12 +18,11 @@ namespace prj_loja
         {
             InitializeComponent();
         }
-        string local = "SERVER=localhost;UID=root;PASSWORD=;DATABASE=lojabanco;";
 
         private void retirada_Load(object sender, EventArgs e)
         {
             #region conectar
-            MySqlConnection conexao = new MySqlConnection(local);
+            MySqlConnection conexao = new MySqlConnection(global.Local);
             try
             {
                 conexao.Open();
@@ -58,7 +57,7 @@ namespace prj_loja
         private void btnAdRetirada_Click(object sender, EventArgs e)
         {
             #region variaveis
-            MySqlConnection conexao = new MySqlConnection(local);
+            MySqlConnection conexao = new MySqlConnection(global.Local);
             string dia = DateTime.Now.Date.ToString("yyyy-MM-dd");
             string horario = DateTime.Now.ToShortTimeString();
 
@@ -123,7 +122,7 @@ namespace prj_loja
             }
 
             #region conectar
-            MySqlConnection conexao = new MySqlConnection(local);
+            MySqlConnection conexao = new MySqlConnection(global.Local);
             try
             {
                 conexao.Open();
@@ -136,7 +135,9 @@ namespace prj_loja
             }
             #endregion
 
-            int codigo = int.Parse(dgvMotivo.Rows[dgvMotivo.Rows.Count - 1].Cells[0].Value.ToString())+1;
+            int codigo = 0;
+
+            codigo = int.Parse(dgvMotivo.Rows[dgvMotivo.Rows.Count - 1].Cells[0].Value.ToString())+1;
 
             string comando = "insert into motivoRetirada(cd_motivoRetirada,nm_motivoRetirada) values("+codigo.ToString()+",'"+txtMotivo.Text+"');";
             MySqlCommand executar = new MySqlCommand(comando, conexao);
@@ -157,5 +158,13 @@ namespace prj_loja
             txtMotivo.Text = "";
         }
         #endregion
+        
+
+        private void dgvMotivo_CellMouseClick(object sender, DataGridViewCellMouseEventArgs e)
+        {
+            lblCodigo.Text = "Codigo: "+dgvMotivo.Rows[dgvMotivo.CurrentRow.Index].Cells[0].Value.ToString();
+            lblMotivo.Text = "Motivo: " + dgvMotivo.Rows[dgvMotivo.CurrentRow.Index].Cells[1].Value.ToString();
+
+        }
     }
 }

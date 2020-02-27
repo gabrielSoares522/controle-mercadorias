@@ -18,7 +18,6 @@ namespace prj_loja
         {
             InitializeComponent();
         }
-        string local = "SERVER=localhost;UID=root;PASSWORD=;DATABASE=lojabanco;";
 
         #region produtos
         List<string> codigos = new List<string>();
@@ -36,6 +35,7 @@ namespace prj_loja
         }
         private void atualizarEstoque()
         {
+            dgvEstoque.Rows.Clear();
             codigos = new List<string>();
             descricao = new List<string>();
             qtEstoque = new List<int>();
@@ -44,7 +44,7 @@ namespace prj_loja
             vlVenda = new List<string>();
 
             #region conectar
-            MySqlConnection conexao = new MySqlConnection(local);
+            MySqlConnection conexao = new MySqlConnection(global.Local);
             MySqlCommand executar;
             MySqlDataReader dados;
             string comando = "";
@@ -152,7 +152,6 @@ namespace prj_loja
         private void btnAdProduto_Click(object sender, EventArgs e)
         {
             #region variaveis
-            string local = "SERVER=localhost;UID=root;PASSWORD=;DATABASE=lojabanco;";
             string codigo = txtProduto.Text;
             string descricao = txtDescricao.Text;
             string custo = "";
@@ -175,10 +174,13 @@ namespace prj_loja
 
             if (n == 0) custo = vl[0];
             else custo = (float.Parse(vl[0]) / float.Parse(vl[1])).ToString();
+
+            custo = custo.Replace(",", ".");
+            preco = preco.Replace(",", ".");
             #endregion
 
             #region conectar
-            MySqlConnection conexao = new MySqlConnection(local);
+            MySqlConnection conexao = new MySqlConnection(global.Local);
 
             try
             {
@@ -204,6 +206,7 @@ namespace prj_loja
             catch
             {
                 MessageBox.Show("falha em registrar novo produto");
+
                 conexao.Close();
                 return;
             }
@@ -211,6 +214,7 @@ namespace prj_loja
             MessageBox.Show("produto cadastrado com sucesso");
             conexao.Close();
             #endregion
+
             string valorCompra = (float.Parse(custo) * float.Parse(quantidade)).ToString();
             valorCompra = valorCompra.Replace(",",".");
             addEstoque(codigo,quantidade,validade,valorCompra);
@@ -242,7 +246,7 @@ namespace prj_loja
             #endregion
 
             #region conectar
-            MySqlConnection conexao = new MySqlConnection(local);
+            MySqlConnection conexao = new MySqlConnection(global.Local);
 
             try
             {
@@ -258,20 +262,17 @@ namespace prj_loja
 
             #region registrar no estoque
             MySqlCommand executar = new MySqlCommand(cmdPegaCodigo, conexao);
-            try
-            {
+            try {
                 dados = executar.ExecuteReader();
             }
-            catch
-            {
+            catch {
                 MessageBox.Show("falha em pegar novo codigo");
                 conexao.Close();
                 return;
             }
-            if (dados.HasRows)
-            {
-                while (dados.Read())
-                {
+
+            if (dados.HasRows) {
+                while (dados.Read()) {
                     codigoCompra = dados[0].ToString();
                 }
             }
@@ -306,7 +307,7 @@ namespace prj_loja
             }
 
             conexao.Close();
-            MessageBox.Show("produto cadastrado com sucesso");
+            MessageBox.Show("produto adicionado ao estoque");
             #endregion
 
             atualizarEstoque();
