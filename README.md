@@ -15,8 +15,9 @@ O botao filtrar na tela estoque não esta funcionado.
 Para visualizar este projeto.
 
 1. Clone o projeto.
-> https://github.com/gabrielSoares522/controle-mercadorias.git
-
+```
+https://github.com/gabrielSoares522/controle-mercadorias.git
+```
 1. Execute dentro do mysql workbench os dois SQL scripts armazenados na  pasta banco no servidor local.
 
 1. Abra o projeto no gerenciador de soluções abra app.config.
