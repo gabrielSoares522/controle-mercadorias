@@ -1,20 +1,19 @@
 # controle-mercadorias
-##A ideia do projeto
+## A ideia do projeto
 auxiliar pequenos estabeliecimentos comerciais a gerenciar as suas vendas e mercadorias armazenadas.
 
-##Funcionalidades
+## Funcionalidades
 * registrar vendas
 * regristrar produtos no estoque
 * gerar relatorios
 * registrar despesas
 
-##Observacoes
+## Observações
 o botao filtrar na tela estoque não esta funcionado.
 
-##Como iniciar projeto
+## Como iniciar projeto
 para visualizar este projeto.
 
-###instalando
 1. clone o projeto.
 
 >https://github.com/gabrielSoares522/controle-mercadorias.git
